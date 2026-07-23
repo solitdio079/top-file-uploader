@@ -1,0 +1,22 @@
+<h1> 
+    Welcome <%= user.name %>
+</h1>
+
+<p> Here you can manage your account and files! </p>
+
+<a href="/folder/"> <button>Manage folders</button></a>
+
+
+<form action="/folder/" method="post">
+    <input type="text" name="name">
+    <button type="submit">Create Folder</button>
+</form>
+
+
+<form action="/profile" method="post" enctype="multipart/form-data">
+    <h4>Upload a file</h4>
+    <input type="file" name="avatar" />
+    <button type="submit">Upload</button>
+</form>
+
+<a href="/"><button>Go Home</button></a>

@@ -1,0 +1,8 @@
+<h2> All my folders</h2>
+
+<% folders.forEach(folder => { %>
+    <p> <%= folder.name %> <a href="/folder/files/<%= folder.id%>">View Files</a>  |  <a href="/folder/upload/<%=folder.id%>"> add files </a> | <a href="/folder/update/<%=folder.id%>">edit</a> <form action="/folder/delete/<%=folder.id%>" method="post"> <button>delete</button></form></p>
+    
+<% }); %>
+
+<a href="/account">Go back</a>

@@ -1,0 +1,25 @@
+<h1> Files inside <%= folder.name %>
+</h1>
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Size</th>
+        <th>Uploaded</th>
+        <th></th>
+    </tr>
+
+    <% files.forEach(file=> { %>
+        <tr>
+            <td> <%= file.name %> </td>
+            <td> <%= file.sizeInKB %> KB </td>
+            <td> <%= file.createdAt %> KB </td>
+
+            <td> <a href="<%=file.path%>" download=""> <button>Download</button> </a> </td>
+        </tr>
+
+    <% }); %>
+
+</table>
+
+<a href="/folder/">Go back</a>

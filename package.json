@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node app.js --watch",
+    "dev": "nodemon app.js",
     "start": "node app.js"
   },
   "repository": {
@@ -24,15 +24,19 @@
     "@prisma/adapter-pg": "^7.8.0",
     "@prisma/client": "^7.8.0",
     "@quixo3/prisma-session-store": "^3.1.21",
+    "@supabase/server": "^1.4.1",
+    "@supabase/supabase-js": "^2.110.8",
     "dotenv": "^17.4.2",
     "ejs": "^6.0.1",
     "express": "^5.2.1",
     "express-session": "^1.19.0",
+    "multer": "^2.2.0",
     "passport": "^0.7.0",
     "passport-local": "^1.0.0",
     "pg": "^8.22.0"
   },
   "devDependencies": {
+    "nodemon": "^3.1.14",
     "prisma": "^7.8.0"
   }
 }

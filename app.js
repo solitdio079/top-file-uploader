@@ -1,39 +1,24 @@
 import "dotenv/config"
 import express from "express"
-import verifyFunction from "./utils/passport.js"
 import crypto from "crypto"
 import { prisma } from "./lib/prisma.js"
 import session from "express-session";
 import passport from "passport";
 import LocalStrategy from "passport-local"
-
 import { PrismaSessionStore } from '@quixo3/prisma-session-store';
-
 import { hashPassword, verifyPassword } from "./utils/password.js"
+import authRouter from "./routes/auth.js"
+import multer from "multer";
+import folderRouter from "./routes/folder.js"
+import path from "path";
+
+
+import upload from "./utils/multer.js";
+
 
 const app = express()
 
 
-passport.use(new LocalStrategy(async function verify(username, password, cb) {
-
-    try {
-        const user = await prisma.user.findUnique({
-            where: { email: username }
-        })
-
-        if (!user) { return cb(null, false, { message: 'Incorrect username.' }); }
-
-        const verify = await verifyPassword(password, user.salt, user.password)
-
-        if (!verify) {
-            return cb(null, false, { message: 'Incorrect password.' });
-        }
-        return cb(null, user);
-
-    } catch (error) {
-        return cb(error)
-    }
-}))
 
 
 
@@ -62,95 +47,40 @@ app.use(
 
 app.use(passport.authenticate('session'));
 
+
 // Seting up ejs as my template engine
 
 app.set("views", "./views")
 
 app.set("view engine", "ejs")
 
+app.use("/uploads", express.static('uploads'));
 
+
+app.use("/auth", authRouter)
+app.use("/folder", folderRouter)
 
 app.get("/", (req, res) => {
-    return res.render("index", { title: "Home Page Test", header: "Our pages are built through thick and thin." })
+    return res.render("index", { title: "Home Page Test", header: "Our pages are built through thick and thin.", user: req.user || null })
 })
-app.use(express.urlencoded({ extended: false }));
-app.get('/login', function (req, res, next) {
-    const message = req.session.messages?.at(-1) ?? null;
+app.get("/account", (req, res, next) => {
+    if (!req.user)
+        return res.redirect("/login")
 
-    // Prevent the old error from appearing repeatedly
-    delete req.session.messages;
 
-    res.render("login", { message });
+    //console.log(req.user)
+    return res.render("account", { user: req.user })
+})
+
+
+
+
+app.post('/profile', upload.single('avatar'), function (req, res, next) {
+    // req.file is the `avatar` file
+    // req.body will hold the text fields, if there were any
+    console.log(req.file.filename)
+    return res.redirect("/")
 });
-
-app.get('/signup', function (req, res, next) {
-    res.render('signup');
-});
-
-app.post('/login/password', passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/login',
-    failureMessage: true
-}));
-
-app.post('/signup', async function (req, res, next) {
-    try {
-        const hashObj = await hashPassword(req.body.password)
-        const salt = hashObj.salt.toString("hex");
-        const hashedPassword = hashObj.hashedPassword.toString("hex")
-
-        const user = await prisma.user.create({
-            data: {
-                name: req.body.username.split("@")[0],
-                email: req.body.username,
-                password: hashedPassword,
-                salt: salt,
-            },
-        });
-
-        const usertemp = {
-            id: user.id,
-            username: user.email
-        };
-        req.login(usertemp, function (err) {
-            if (err) { return next(err); }
-            res.redirect('/');
-        });
-    } catch (error) {
-        next(error)
-    }
-});
-
-app.post('/logout', function (req, res, next) {
-    req.logout(function (err) {
-        if (err) { return next(err); }
-        res.redirect('/');
-    });
-});
-
-
-
-passport.serializeUser((user, cb) => {
-    cb(null, user.id);
-});
-
-passport.deserializeUser(async (id, cb) => {
-    try {
-        const user = await prisma.user.findUnique({
-            where: { id },
-            select: {
-                id: true,
-                email: true
-            }
-        });
-
-        return cb(null, user ?? false);
-    } catch (error) {
-        return cb(error);
-    }
-});
-
-
 
 
 

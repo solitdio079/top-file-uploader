@@ -20,7 +20,15 @@ model User {
   salt String @default("")
   name  String?
   posts Post[]
+  folders Folder[]
 } 
+
+model Folder {
+  id        Int     @id @default(autoincrement()) 
+  name     String
+  owner    User    @relation(fields: [ownerId], references: [id])
+  ownerId  Int
+}
 model Session {
   id        String   @id
   sid       String   @unique

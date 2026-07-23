@@ -1,40 +1,47 @@
+import passport from "passport"
+import LocalStrategy from "passport-local"
+import { hashPassword, verifyPassword } from "./password.js"
+import {prisma} from "../lib/prisma.js"
 
-import crypto from "crypto"
-
-import { prisma } from "../lib/prisma.js"
-
-
-export default async function verify(username, password, cb) {
+passport.use(new LocalStrategy(async function verify(username, password, cb) {
 
     try {
         const user = await prisma.user.findUnique({
             where: { email: username }
         })
 
-        if (!user) { return cb(null, false, { message: 'Incorrect username or password.' }); }
+        if (!user) { return cb(null, false, { message: 'Incorrect username.' }); }
 
-        crypto.pbkdf2(password, row.salt, 310000, 32, 'sha256', function (err, hashedPassword) {
-            if (err) { return cb(err); }
-            if (!crypto.timingSafeEqual(user.password, hashedPassword)) {
-                return cb(null, false, { message: 'Incorrect username or password.' });
-            }
-            return cb(null, user);
-        });
+        const verify = await verifyPassword(password, user.salt, user.password)
+
+        if (!verify) {
+            return cb(null, false, { message: 'Incorrect password.' });
+        }
+        return cb(null, user);
+
     } catch (error) {
         return cb(error)
     }
+}))
 
 
-    //   db.get('SELECT * FROM users WHERE username = ?', [ username ], function(err, row) {
-    //     if (err) { return cb(err); }
-    //     if (!row) { return cb(null, false, { message: 'Incorrect username or password.' }); }
+passport.serializeUser((user, cb) => {
+    cb(null, user.id);
+});
 
-    //     crypto.pbkdf2(password, row.salt, 310000, 32, 'sha256', function(err, hashedPassword) {
-    //       if (err) { return cb(err); }
-    //       if (!crypto.timingSafeEqual(row.hashed_password, hashedPassword)) {
-    //         return cb(null, false, { message: 'Incorrect username or password.' });
-    //       }
-    //       return cb(null, row);
-    //     });
-    //   });
-};
+passport.deserializeUser(async (id, cb) => {
+    try {
+        const user = await prisma.user.findUnique({
+            where: { id },
+            select: {
+                id: true,
+                email: true,
+                name: true
+            }
+        });
+
+        return cb(null, user ?? false);
+    } catch (error) {
+        return cb(error);
+    }
+});
