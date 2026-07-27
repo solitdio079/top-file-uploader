@@ -14,6 +14,7 @@ import path from "path";
 
 
 import upload from "./utils/multer.js";
+import supabase from "./utils/supaClient.js";
 
 
 const app = express()
@@ -59,6 +60,32 @@ app.use("/uploads", express.static('uploads'));
 
 app.use("/auth", authRouter)
 app.use("/folder", folderRouter)
+
+
+app.get("/download/:folderName/:storedName", async (req, res, next) => {
+
+
+    try {
+        const BUCKET_NAME = 'top_upload'
+        const { storedName, folderName } = req.params
+
+        const { data, error } = await supabase.storage.from(BUCKET_NAME).createSignedUrl(`${folderName}/${storedName}`, 3600, {
+            download: true
+        })
+
+        if(error) {
+            return res.status(500).json({
+                message: 'Supabase could not sign url.',
+                error: error.message
+            })
+        }
+        if (data) {
+           return res.redirect(302, data.signedUrl);
+        }
+    } catch (error) {
+        next(error)
+    }
+})
 
 app.get("/", (req, res) => {
     return res.render("index", { title: "Home Page Test", header: "Our pages are built through thick and thin.", user: req.user || null })

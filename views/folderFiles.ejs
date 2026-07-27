@@ -13,9 +13,9 @@
         <tr>
             <td> <%= file.name %> </td>
             <td> <%= file.sizeInKB %> KB </td>
-            <td> <%= file.createdAt %> KB </td>
+            <td> <%= file.createdAt %> </td>
 
-            <td> <a href="<%=file.path%>" download=""> <button>Download</button> </a> </td>
+            <td> <a href="/download/<%=file.folderName%>/<%=file.storageName%>" download=""> <button>Download</button> </a> </td>
         </tr>
 
     <% }); %>

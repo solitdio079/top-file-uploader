@@ -4,16 +4,17 @@ import { mkdir, rename, rm, readdir, stat } from "node:fs/promises";
 
 
 import path from "node:path";
+import { randomUUID } from "node:crypto";
 import { fileURLToPath } from "node:url";
 
-import upload from "../utils/multer.js";
+import upload, { memUpload } from "../utils/multer.js";
+import supabase from "../utils/supaClient.js";
 
 
 const rootPath = process.cwd() + "/uploads/";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
 
 //console.log(__dirname);
 
@@ -65,9 +66,7 @@ router.post("/update/:id", async (req, res, next) => {
             where: { id: parseInt(id) }
         })
 
-        const oldPath = path.join(rootPath, oldFolder.name);
-        const newPath = path.join(rootPath, req.body.name);
-        await rename(oldPath, newPath);
+        
 
 
         const folder = await prisma.folder.update({
@@ -106,32 +105,32 @@ router.get("/files/:id", async (req, res, next) => {
             where: { id: parseInt(id) }
         })
 
-       
+
         const folderPath = path.join(rootPath, folder.name)
 
-        const entries = await readdir(folderPath, {
-            withFileTypes: true
+        const entries = await prisma.file.findMany({
+            where: {
+                folderName: folder.name
+            }
         })
 
         const fileInformation = await Promise.all(
             entries.map(async (entry) => {
-                const fullPath ="/uploads/"+folder.name+"/"+entry.name;
-                const information = await stat(folderPath);
-
+                //const fullPath ="/uploads/"+folder.name+"/"+entry.name;
+                //const information = await stat(folderPath);
                 return {
-                    name: entry.name,
-                    path: fullPath,
-                    sizeInBytes: information.size,
-                    sizeInKB: (information.size / 1024).toFixed(2),
-                    isFile: information.isFile(),
-                    isDirectory: information.isDirectory(),
-                    createdAt: information.birthtime,
-                    modifiedAt: information.mtime,
+                    name: entry.originalName,
+                    path: entry.storagePath,
+                    folderName: entry.folderName,
+                    storageName: entry.storageName,
+                    sizeInBytes: entry.size,
+                    sizeInKB: (entry.size / 1024).toFixed(2),
+                    createdAt: entry.createdAt,
                 };
             })
         );
 
-        return res.render("folderFiles", {folder, files:fileInformation})
+        return res.render("folderFiles", { folder, files: fileInformation })
 
     } catch (error) {
         next(error)
@@ -152,9 +151,61 @@ router.get("/upload/:id", async (req, res, next) => {
     }
 })
 
-router.post("/upload/:folderName", upload.array('randomFiles', 4), async (req, res, next) => {
+router.post("/upload/:folderName", memUpload.single('randomFile'), async (req, res, next) => {
     //console.log(req.files[0].filename)
-    return res.redirect("/folder/")
+
+    try {
+        const BUCKET_NAME = 'top_upload'
+        const { folderName } = req.params
+        if (!req.file) {
+            return res.status(400).json({
+                message: 'No file was provided'
+            })
+        }
+
+        const extension = path.extname(req.file.originalname)
+        const storageName = `${randomUUID()}${extension}`;
+        const storagePath = `${folderName}/${storageName}`
+
+        const { data: uploadedFile, error: uploadError } = await supabase.storage.from(BUCKET_NAME).upload(storagePath, req.file.buffer, {
+            contentType: req.file.mimetype,
+            cacheControl: '3600',
+            upsert: false
+        })
+
+        if (uploadError) {
+            return res.status(500).json({
+                message: 'Supabase upload failed',
+                error: error.message
+            })
+        }
+
+        try {
+            await prisma.file.create({
+                data: {
+                    originalName: req.file.originalname,
+                    storageName,
+                    storagePath: uploadedFile.path,
+                    bucket: BUCKET_NAME,
+                    mimeType: req.file.mimetype,
+                    size: req.file.size,
+                    folderName
+                }
+            })
+
+            return res.redirect("/folder/")
+
+        } catch (databaseError) {
+            await supabase.storage.from(BUCKET_NAME).remove([uploadedFile.path])
+
+            throw databaseError
+        }
+
+
+    } catch (error) {
+        next(error)
+    }
+
 })
 
 
@@ -164,12 +215,28 @@ router.post("/delete/:id", async (req, res, next) => {
         const oldFolder = await prisma.folder.findUnique({
             where: { id: parseInt(id) }
         })
-        const folderPath = path.join(rootPath, oldFolder.name)
-        await rm(folderPath, {
-            recursive: true,
-            force: true
+        const folderFiles = await prisma.file.findMany({
+            where: {
+                folderName: oldFolder.name
+            }
         })
-        const deleteUser = await prisma.folder.delete({
+
+        const batch = folderFiles.map(file => `${oldFolder.name}/${file.storageName}`)
+
+        const folderPath = path.join(rootPath, oldFolder.name)
+       
+        if (batch.length > 0) {
+            await supabase.storage
+                .from('top_upload')
+                .remove(batch);
+        }
+
+        await prisma.file.deleteMany({
+            where: {
+                folderName: oldFolder.name
+            }
+        })
+        await prisma.folder.delete({
             where: {
                 id: parseInt(id),
             },
@@ -190,7 +257,7 @@ router.post("/", async (req, res, next) => {
     const ownerId = req.user.id
 
     try {
-        await createFolder(path.join(rootPath, name))
+        // await createFolder(path.join(rootPath, name))
         const folder = await prisma.folder.create({
             data: {
                 name,
@@ -201,11 +268,8 @@ router.post("/", async (req, res, next) => {
         return res.redirect("/folder/")
 
     } catch (error) {
-
+        next(error)
     }
-
-
-
 })
 
 export default router

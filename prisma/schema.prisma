@@ -12,7 +12,6 @@ datasource db {
   provider = "postgresql"
 }
 
-
 model User { 
   id    Int     @id @default(autoincrement()) 
   email String  @unique
@@ -25,9 +24,23 @@ model User {
 
 model Folder {
   id        Int     @id @default(autoincrement()) 
-  name     String
+  name     String @unique
   owner    User    @relation(fields: [ownerId], references: [id])
   ownerId  Int
+  files File[]
+}
+
+model File {
+  id           String   @id @default(cuid())
+  originalName String
+  storageName  String
+  storagePath  String   @unique
+  bucket       String
+  mimeType     String
+  size         Int
+  createdAt    DateTime @default(now())
+  folder Folder @relation(fields: [folderName], references: [name])
+  folderName String
 }
 model Session {
   id        String   @id
