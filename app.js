@@ -55,7 +55,7 @@ app.set("views", "./views")
 
 app.set("view engine", "ejs")
 
-app.use("/uploads", express.static('uploads'));
+app.use(express.static('uploads'));
 
 
 app.use("/auth", authRouter)

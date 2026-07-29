@@ -1,0 +1,129 @@
+@import url(../styles/base.css);
+@import url(../styles/components.css);
+
+.page{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 100vh;
+   
+}
+
+header{
+    background: url('../images/login-hero-mobile.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    flex: 1;
+}
+nav {
+    display: flex;
+    justify-content: space-between;
+}
+
+nav img  {
+    max-width:200px;
+}
+
+.main{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--card-background-color);
+    padding: var(--page-padding);
+    text-align: left;
+}
+
+.main .title{
+    margin:0;
+    font-size: var(--xl);
+    font-weight: 600;
+    color: var(--main-text-color);
+}
+.main .subtitle{
+    font-size: var(--sm);
+    color: var(--secondary-text-color);
+    margin-bottom: var(--lg);
+}
+
+.main form{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 400px;
+    justify-content: center;
+    align-items: center;
+    gap: var(--md);
+}
+
+.main form .form-section{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: var(--sm);
+}
+.main form .form-section label{
+    font-size: var(--sm);
+    color: var(--primary-text-color);
+    font-weight: bold;
+}
+.main form .remember-me{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--sm);
+    font-size: var(--sm);
+   
+    color: var(--primary-text-color);
+}
+.main form .remember-me label{
+    font-weight: normal;
+}
+
+.register{
+    margin-top: var(--lg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--sm);
+    font-size: var(--sm);
+    color: var(--secondary-text-color);
+    max-width: 400px;
+
+}
+.register span{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--sm);
+    font-size: var(--sm);
+    color: var(--secondary-text-color);
+    max-width: 400px;
+}
+.register span hr{
+    flex: 1;
+    border: 1px solid var(--border-color);
+    width: 75px;
+}
+/* Mobile styles are the default */
+
+@media (min-width: 768px) {
+  /* Tablet */
+  
+}
+
+@media (min-width: 1024px) {
+  /* Laptop */
+  .page{
+    flex-direction: row;
+  }
+  header{
+    background-image: url('../images/login-hero-desktop.png');
+  }
+}
+
+@media (min-width: 1280px) {
+  /* Desktop */
+}

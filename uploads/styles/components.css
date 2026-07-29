@@ -1,0 +1,56 @@
+button, .btn{
+    width: 100%;
+    padding: var(--sm);
+    font-size: var(--sm);
+    border: 1px solid var(--border-color);
+    border-radius: var(--xs);
+    display: flex;
+    justify-content: center;
+
+}
+
+input, .input {
+    font-size: var(--sm);
+    padding: var(--sm);
+    border: 1px solid var(--border-color);
+    color: var(--secondary-text-color);
+    border-radius: var(--xs);
+}
+
+a{
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+    color: var(--primary-color);
+}
+
+.btn-primary{
+    background-color: var(--primary-color);
+    color: var(--card-background-color);
+}
+
+.btn-primary:hover{
+    background-color: var(--card-background-color);
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+}
+
+.btn-outline{
+    background-color: var(--card-background-color);
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+}
+
+.btn-outline:hover{
+    background-color: var(--primary-color);
+    color: var(--card-background-color);
+}
+
+.error{
+    color: var(--error-text-color);
+    background-color: var(--error-background-color);
+    padding: var(--sm);
+    border-radius: var(--xs);
+    font-size: var(--sm);
+    text-align: center;
+}

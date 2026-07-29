@@ -2,6 +2,8 @@ import "dotenv/config"
 import express, {Router} from "express"
 import passport from "passport"
 import "../utils/passport.js"
+import {hashPassword, verifyPassword} from "../utils/password.js"
+import {prisma} from "../lib/prisma.js"
 const router = Router()
 
 router.use(express.urlencoded({ extended: false }))
@@ -23,7 +25,7 @@ router.get('/login',  (req, res, next) => {
 router.get('/signup', function (req, res, next) {
     if(req.user)
         return res.redirect("/account")
-    res.render('signup');
+    res.render('signup', { message: null });
 });
 
 router.post('/login/password', passport.authenticate('local', {
@@ -34,7 +36,10 @@ router.post('/login/password', passport.authenticate('local', {
 
 router.post('/signup', async function (req, res, next) {
     try {
-        const hashObj = await hashPassword(req.body.password)
+        if(req.body.password !== req.body.confirmPassword){
+            return res.render('signup', { message: "Passwords do not match" });
+        }
+        const hashObj = await hashPassword(req.body.password) // hashPassword(req.body.password)
         const salt = hashObj.salt.toString("hex");
         const hashedPassword = hashObj.hashedPassword.toString("hex")
 

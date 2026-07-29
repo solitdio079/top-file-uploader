@@ -1,18 +1,68 @@
-<h1>Sign in</h1>
-<form action="/auth/login/password" method="post">
-    <section>
-        <label for="username">Username</label>
-        <input id="username" name="username" type="text" autocomplete="username" required autofocus>
-    </section>
-    <section>
-        <label for="current-password">Password</label>
-        <input id="current-password" name="password" type="password" autocomplete="current-password" required>
-    </section>
-    <button type="submit">Sign in</button>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Top Upload - Login</title>
+  <link rel="stylesheet" href="/styles/auth.css">
+</head>
+
+<body>
+  <div class="page">
+    <header class="header">
+      <nav class="nav">
+        <a href="/"><img src="/images/logo.png" alt="Logo" class="logo"></a>
+      </nav>
+    </header>
+
+    <div class="main">
+      <h1 class="title">Welcome back</h1>
+      <p class="subtitle">Sign in to continue using your files</p>
+      <% if (message) { %>
+      <p class="error"><%= message %></p>
+      <% } %>
+      <form action="/auth/login/password" method="post">
+        <section class="form-section">
+          <label for="username">Username</label>
+          <input id="username" name="username" type="text" autocomplete="username" placeholder="Enter your username" required autofocus>
+        </section>
+        <section class="form-section">
+          <label for="current-password">Password</label>
+          <input id="current-password" name="password" type="password" autocomplete="current-password" required>
+        </section>
+        <section class="form-section remember-me">
+          <label for="remember-me">
+            <input id="remember-me" name="remember-me" type="checkbox">
+            Remember me
+          </label>
+
+          <a href="/auth/forgot-password">Forgot password?</a>
+        </section>
+        <button class="submit-button btn btn-primary" type="submit">Sign in</button>
+      </form>
+      <div class="register"> <span>
+          <hr>Don't have an account?
+          <hr>
+        </span> <a class="register-link btn btn-outline" href="/auth/signup">Create Account</a></div>
 
 
-</form>
-<% if (message) { %>
-  <p class="error"><%= message %></p>
-<% } %>
-<a href="/"> <button>Back Home</button> </a>
+    </div>
+
+
+
+  </div>
+
+ <script>
+    const errorElement = document.querySelector('.error');
+    if(errorElement.textContent) {
+        setTimeout(() => {
+            errorElement.remove();
+        }, 5000);
+    }
+
+</script>
+
+</body>
+
+</html>
