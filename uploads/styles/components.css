@@ -41,6 +41,17 @@ a{
     border: 1px solid var(--primary-color);
 }
 
+.btn-error{
+    background-color: var(--error-background-color);
+    color: var(--error-text-color);
+    border: 1px solid var(--error-text-color);
+}
+
+.btn-error:hover{
+    background-color: var(--error-text-color);
+    color: var(--error-background-color);
+}
+
 .btn-outline:hover{
     background-color: var(--primary-color);
     color: var(--card-background-color);

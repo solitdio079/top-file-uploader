@@ -1,19 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> <%= title %> </title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> Top Upload - Home </title>
+  <link rel="stylesheet" href="/styles/index.css">
 </head>
+
 <body>
-    <h2> <%= header %> </h2>
-    <p> Here we are on the Home Page! </p>
-    <% if(!user) {  %>
-    <a href="/auth/login"><button> Login </button></a>
-    <a href="/auth/signup"><button> Sign Up </button></a>
-    <% }else {  %>
-         <a href="/account"><button> My account </button></a>
-          <form method="post" action="/auth/logout"><button type="submit"> Logout </button></a>
-    <% } %>
+  <header>
+    <nav>
+      <a href="/"><img src="/images/logo.png" alt="Logo" class="logo"></a>
+    </nav>
+  </header>
+  <div class="main">
+    <div class="hero">
+      <div class="hero-text">
+        <h1 class="title"> <%= title %> </h1>
+        <p class="subtitle"> <%= subtitle %></p>
+
+        <div class="action">
+          <% if(!user) {  %>
+          <a href="/auth/login" ><button class="btn btn-primary"> Login </button></a>
+          <a href="/auth/signup" ><button class="btn btn-outline"> Sign Up </button></a>
+          <% }else {  %>
+          <a href="/account" ><button class="btn btn-primary"> My account </button></a>
+          <form method="post" action="/auth/logout"><button type="submit" class="btn btn-error"> Logout </button></a>
+            <% } %>
+        </div>
+      </div>
+      <div class="hero-image">
+        <img src="/images/home-hero.png" alt="Hero Image">
+      </div>
+
+    </div>
+
+
+    <div class="card-container">
+      <div class="card">
+        <div class="card-icon">
+          <i data-lucide="cloud-upload"></i>
+        </div>
+        <div class="card-content">
+          <h3 class="card-title">Simple Uploads</h3>
+          <p class="card-description">Upload files in seconds and keep everything in one place</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-icon card-icon-yellow">
+          <i data-lucide="folder"></i>
+        </div>
+        <div class="card-content">
+          <h3 class="card-title">Organized Folders</h3>
+          <p class="card-description">Create folders to keep your files neat and easy to find</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-icon card-icon-blue">
+          <i data-lucide="lock"></i>
+        </div>
+        <div class="card-content">
+          <h3 class="card-title">Easy Access</h3>
+          <p class="card-description">Access your files anytime, anywhere, on any device</p>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+  <footer>
+   <img src="/images/logo.png" alt="Logo" class="logo">
+    <p class="copyright">&copy; 2024 Top Upload. All rights reserved.</p>
+   <div class="footer-links">
+    <a href="/terms">Terms of Service</a>
+    <a href="/privacy">Privacy Policy</a>
+   </div>
+   
+  </footer>
+
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    lucide.createIcons();
+  </script>
+
 </body>
+
 </html>

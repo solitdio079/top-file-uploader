@@ -1,5 +1,6 @@
 :root{
     --primary-color:#5B5CE2;
+    --primary-light: #5b5be28a;
     --page-background-color: #F7F7F4;
     --card-background-color: #FFFFFF;
     --disabled-background-color: #F2F4F7;
@@ -16,8 +17,11 @@
     --info-background-color: #EAF2FF;
     --folder-purple: #7778F2;
     --folder-blue: #3B82F6;
+    --folder-blue-light: rgba(59, 130, 246, 0.423);
     --folder-green: #45C89A;
+    --folder-green-light:rgba(69, 200, 154, 0.465)A;
     --folder-yellow: #F4C95D;
+    --folder-yellow-light: rgba(244, 201, 93, 0.423);
 
     --xs:8px;
     --sm:16px;
@@ -34,3 +38,13 @@ body{
     background-color: var(--page-background-color);
     box-sizing: border-box;
 }
+
+nav {
+    display: flex;
+    justify-content: space-between;
+}
+
+.logo  {
+    max-width:200px;
+}
+

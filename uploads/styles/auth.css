@@ -15,14 +15,6 @@ header{
     background-repeat: no-repeat;
     flex: 1;
 }
-nav {
-    display: flex;
-    justify-content: space-between;
-}
-
-nav img  {
-    max-width:200px;
-}
 
 .main{
     flex: 1;

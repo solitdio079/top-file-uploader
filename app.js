@@ -87,9 +87,7 @@ app.get("/download/:folderName/:storedName", async (req, res, next) => {
     }
 })
 
-app.get("/", (req, res) => {
-    return res.render("index", { title: "Home Page Test", header: "Our pages are built through thick and thin.", user: req.user || null })
-})
+
 app.get("/account", (req, res, next) => {
     if (!req.user)
         return res.redirect("/login")
@@ -108,7 +106,9 @@ app.post('/profile', upload.single('avatar'), function (req, res, next) {
     console.log(req.file.filename)
     return res.redirect("/")
 });
-
+app.get("/", (req, res) => {
+    return res.render("index", { title: "Your files, organized and ready when you are", subtitle: "Upload, organize, and download your files from one simple workspace", user: req.user || null })
+})
 
 
 app.listen(PORT, () => {
