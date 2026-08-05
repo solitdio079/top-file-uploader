@@ -6,6 +6,7 @@ button, .btn{
     border-radius: var(--xs);
     display: flex;
     justify-content: center;
+    transition: all 0.3s ease-in-out;
 
 }
 

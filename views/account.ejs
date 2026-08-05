@@ -1,22 +1,109 @@
-<h1> 
-    Welcome <%= user.name %>
-</h1>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TOP Upload - Account</title>
+    <link rel="stylesheet" href="/styles/account.css" />
+  </head>
 
-<p> Here you can manage your account and files! </p>
+  <body>
+    <header>
+      <div class="logo-container">
+        <button class="menu-button btn btn-outline" id="menu-button">
+          <i data-lucide="menu"></i>
+        </button>
+        <a href="/"><img src="/images/logo.png" alt="Logo" class="logo" /></a>
+      </div>
 
-<a href="/folder/"> <button>Manage folders</button></a>
+      <aside class="aside" id="sidebar">
+        <nav class="nav">
+          <a href="/"> <i data-lucide="folder"></i> <span>My files</span> </a>
+          <a href="/"> <i data-lucide="users"></i> <span>Shared</span> </a>
+          <a href="/"> <i data-lucide="clock"></i> <span>Recent</span> </a>
+          <a href="/"> <i data-lucide="trash"></i> <span>Trash</span> </a>
+        </nav>
 
+        <div class="storage-card">
+          <h3>Storage</h3>
+          <p>6.4GB of 10GB used</p>
+          <progress value="60" max="100"></progress>
+          <span>64% used</span>
+        </div>
+      </aside>
+    </header>
 
-<form action="/folder/" method="post">
-    <input type="text" name="name">
-    <button type="submit">Create Folder</button>
-</form>
+    <div class="main">
+      <div>
+        <h1 class="title">Welcome, <%= user.name %></h1>
+        <p class="subtitle">Manage your account and files!</p>
+      </div>
 
+      <div class="profile-card">
+        <img
+          src="/images/placeholder-avatar.png"
+          alt="Avatar"
+          class="profile-image"
+        />
+        <div class="profile-text">
+          <h3 class="profile-title">Profile Information</h3>
+          <p class="profile-description">
+            Update your profile details at any time.
+          </p>
+          <button class="btn btn-outline">Edit Profile</button>
+        </div>
+      </div>
 
-<form action="/profile" method="post" enctype="multipart/form-data">
-    <h4>Upload a file</h4>
-    <input type="file" name="avatar" />
-    <button type="submit">Upload</button>
-</form>
+      <div class="storage-card big">
+        <h3>Storage</h3>
+        <p>6.4GB of 10GB used</p>
+        <progress value="60" max="100"></progress>
+        <span>64% used</span>
+      </div>
 
-<a href="/"><button>Go Home</button></a>
+      <div class="manage-card">
+        <div class="manage-icon">
+          <i data-lucide="folder"></i>
+        </div>
+        <div class="manage-content">
+          <h3 class="manage-title">Manage Folders</h3>
+          <p class="manage-description">
+            Create, edit, and organize your folders for better file management.
+          </p>
+        </div>
+        <div class="manage-link">
+          <a href="/folder/"><i data-lucide="arrow-right"></i></a>
+        </div>
+      </div>
+
+      <form action="/folder/" class="folder-form" method="post">
+        <h4>Create a folder</h4>
+        <div class="input-container">
+          <input type="text" name="name" placeholder="Folder name" />
+          <button class="btn btn-primary" type="submit">Create Folder</button>
+        </div>
+      </form>
+
+      <footer>
+        <img src="/images/logo.png" alt="Logo" class="logo" />
+        <p class="copyright">&copy; 2024 Top Upload. All rights reserved.</p>
+        <div class="footer-links">
+          <a href="/terms">Terms of Service</a>
+          <a href="/privacy">Privacy Policy</a>
+        </div>
+      </footer>
+    </div>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+      lucide.createIcons();
+
+      const menuButton = document.getElementById("menu-button");
+      const sidebar = document.getElementById("sidebar");
+
+      menuButton.addEventListener("click", () => {
+        sidebar.classList.toggle("slide-in");
+      });
+    </script>
+  </body>
+</html>

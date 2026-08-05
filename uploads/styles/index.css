@@ -132,22 +132,6 @@ header {
     color: var(--secondary-text-color);
 }
 
-
-footer {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    padding: var(--sm) var(--page-padding);
-    border-top: 1px solid var(--border-color);
-}
-
-footer .footer-links {
-    display: flex;
-    gap: var(--sm);
-    margin-top: var(--sm);
-}
-
 @media (min-width: 1024px) {
 
     /* Laptop */

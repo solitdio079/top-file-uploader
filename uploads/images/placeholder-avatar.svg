@@ -1,0 +1,6 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title">
+  <title id="title">Default user avatar</title>
+  <circle cx="128" cy="128" r="120" fill="#ECECFF"/>
+  <circle cx="128" cy="96" r="40" fill="#172033"/>
+  <path d="M48 208C48 163.817 83.8172 128 128 128C172.183 128 208 163.817 208 208V216C184.31 235.975 157.387 246 128 246C98.6128 246 71.69 235.975 48 216V208Z" fill="#5B5CE2"/>
+</svg>

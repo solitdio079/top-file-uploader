@@ -22,10 +22,10 @@
 
         <div class="action">
           <% if(!user) {  %>
-          <a href="/auth/login" ><button class="btn btn-primary"> Login </button></a>
-          <a href="/auth/signup" ><button class="btn btn-outline"> Sign Up </button></a>
+          <a href="/auth/login"><button class="btn btn-primary"> Login </button></a>
+          <a href="/auth/signup"><button class="btn btn-outline"> Sign Up </button></a>
           <% }else {  %>
-          <a href="/account" ><button class="btn btn-primary"> My account </button></a>
+          <a href="/account"><button class="btn btn-primary"> My account </button></a>
           <form method="post" action="/auth/logout"><button type="submit" class="btn btn-error"> Logout </button></a>
             <% } %>
         </div>
@@ -72,13 +72,13 @@
   </div>
 
   <footer>
-   <img src="/images/logo.png" alt="Logo" class="logo">
+    <img src="/images/logo.png" alt="Logo" class="logo">
     <p class="copyright">&copy; 2024 Top Upload. All rights reserved.</p>
-   <div class="footer-links">
-    <a href="/terms">Terms of Service</a>
-    <a href="/privacy">Privacy Policy</a>
-   </div>
-   
+    <div class="footer-links">
+      <a href="/terms">Terms of Service</a>
+      <a href="/privacy">Privacy Policy</a>
+    </div>
+
   </footer>
 
 
