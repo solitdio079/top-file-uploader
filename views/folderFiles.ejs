@@ -1,25 +1,80 @@
-<h1> Files inside <%= folder.name %>
-</h1>
+<!DOCTYPE html>
+<html lang="en">
 
-<table border="1">
-    <tr>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TOP Upload - Account</title>
+  <link rel="stylesheet" href="/styles/account.css" />
+</head>
+
+<body>
+  <header>
+    <div class="logo-container">
+      <button class="menu-button btn btn-outline" id="menu-button">
+        <i data-lucide="menu"></i>
+      </button>
+      <a href="/"><img src="/images/logo.png" alt="Logo" class="logo" /></a>
+    </div>
+
+    <aside class="aside" id="sidebar">
+      <nav class="nav">
+        <a href="/"> <i data-lucide="folder"></i> <span>My files</span> </a>
+        <a href="/"> <i data-lucide="users"></i> <span>Shared</span> </a>
+        <a href="/"> <i data-lucide="clock"></i> <span>Recent</span> </a>
+        <a href="/"> <i data-lucide="trash"></i> <span>Trash</span> </a>
+      </nav>
+
+      <div class="storage-card">
+        <h3>Storage</h3>
+        <p>6.4GB of 10GB used</p>
+        <progress value="60" max="100"></progress>
+        <span>64% used</span>
+      </div>
+    </aside>
+  </header>
+
+  <div class="main">
+
+    <h1> Files inside <%= folder.name %>
+    </h1>
+
+    <table border="1">
+      <tr>
         <th>Name</th>
         <th>Size</th>
         <th>Uploaded</th>
         <th></th>
-    </tr>
+      </tr>
 
-    <% files.forEach(file=> { %>
-        <tr>
-            <td> <%= file.name %> </td>
-            <td> <%= file.sizeInKB %> KB </td>
-            <td> <%= file.createdAt %> </td>
+      <% files.forEach(file=> { %>
+      <tr>
+        <td> <%= file.name %> </td>
+        <td> <%= file.sizeInKB %> KB </td>
+        <td> <%= file.createdAt %> </td>
 
-            <td> <a href="/download/<%=file.folderName%>/<%=file.storageName%>" download=""> <button>Download</button> </a> </td>
-        </tr>
+        <td> <a href="/download/<%=file.folderName%>/<%=file.storageName%>" download=""> <button>Download</button> </a> </td>
+      </tr>
 
-    <% }); %>
+      <% }); %>
 
-</table>
+    </table>
 
-<a href="/folder/">Go back</a>
+    <a href="/folder/">Go back</a>
+
+  </div>
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    lucide.createIcons();
+
+    const menuButton = document.getElementById("menu-button");
+    const sidebar = document.getElementById("sidebar");
+
+    menuButton.addEventListener("click", () => {
+      sidebar.classList.toggle("slide-in");
+    });
+  </script>
+</body>
+
+</html>
