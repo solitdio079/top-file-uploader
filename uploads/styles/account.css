@@ -133,7 +133,7 @@ header aside nav a {
     border-radius: var(--xs);
     width: 100%;
     text-align: center;
-    max-width: 400px;
+    max-width: 200px;
 
 }
 
@@ -260,6 +260,91 @@ header aside nav a {
     flex: 1
 }
 
+
+
+/***  Folders file  ***/
+
+.folder-card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: var(--md);
+}
+
+.folder-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--xs);
+    padding: var(--sm);
+    background-color: var(--card-background-color);
+    box-shadow: 0px 1px 2px var(--border-color);
+    border-radius: var(--xs);
+    width: 100%;
+    text-align: center;
+}
+
+.folder-card .icon {
+    border: 1px solid var(--border-color);
+    padding: var(--sm);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: var(--lg);
+    color: var(--folder-blue);
+    transition: all 0.3s ease-in-out;
+}
+.folder-card .icon svg {
+    width: var(--lg);
+    height: var(--lg);
+}
+
+.folder-card .content {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    gap: var(--xs);
+}
+
+.folder-card .content .title {
+    margin: 0;
+    font-size: var(--md);
+    font-weight: bold;
+    color: var(--main-text-color);
+}
+
+.folder-card .content .description {
+    margin: 0;  
+    font-size: calc(var(--sm) - 2px);
+    color: var(--secondary-text-color);
+}
+
+.folder-card dialog[open]{
+    max-width: 300px;
+    margin: 1rem auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;    
+    gap: var(--sm);
+    padding: var(--sm);
+    background-color: var(--card-background-color);
+    box-shadow: 0px 1px 2px var(--border-color);
+    border-radius: var(--xs);
+    width: 100%;
+    text-align: center;
+    border: 1px solid var(--border-color);
+}
+
+.dialog{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--sm);
+}
+
+/**** Folder file done ****/
 @media (min-width: 1024px) {
 
     body {

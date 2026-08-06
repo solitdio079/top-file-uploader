@@ -1,8 +1,92 @@
-<h2> All my folders</h2>
+<!DOCTYPE html>
+<html lang="en">
 
-<% folders.forEach(folder => { %>
-    <p> <%= folder.name %> <a href="/folder/files/<%= folder.id%>">View Files</a>  |  <a href="/folder/upload/<%=folder.id%>"> add files </a> | <a href="/folder/update/<%=folder.id%>">edit</a> <form action="/folder/delete/<%=folder.id%>" method="post"> <button>delete</button></form></p>
-    
-<% }); %>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TOP Upload - Account</title>
+  <link rel="stylesheet" href="/styles/account.css" />
+</head>
 
-<a href="/account">Go back</a>
+<body>
+  <header>
+    <div class="logo-container">
+      <button class="menu-button btn btn-outline" id="menu-button">
+        <i data-lucide="menu"></i>
+      </button>
+      <a href="/"><img src="/images/logo.png" alt="Logo" class="logo" /></a>
+    </div>
+
+    <aside class="aside" id="sidebar">
+      <nav class="nav">
+        <a href="/"> <i data-lucide="folder"></i> <span>My files</span> </a>
+        <a href="/"> <i data-lucide="users"></i> <span>Shared</span> </a>
+        <a href="/"> <i data-lucide="clock"></i> <span>Recent</span> </a>
+        <a href="/"> <i data-lucide="trash"></i> <span>Trash</span> </a>
+      </nav>
+
+      <div class="storage-card">
+        <h3>Storage</h3>
+        <p>6.4GB of 10GB used</p>
+        <progress value="60" max="100"></progress>
+        <span>64% used</span>
+      </div>
+    </aside>
+  </header>
+
+  <div class="main">
+
+    <div>
+      <h1 class="title">My folders</h1>
+      <p class="subtitle">Organize your uploads into folders!</p>
+    </div>
+
+
+    <div class="folder-card-container">
+      <% folders.forEach(folder => { %>
+
+      <div class="folder-card">
+        <div class="icon">
+          <i data-lucide="folder"></i>
+        </div>
+        <div class="content">
+          <div class="title"><%= folder.name %></div>
+          <div class="description"> <%= folder.files.length || 0 %> files </div>
+        </div>
+
+        <div class="action">
+          <button command="show-modal" class="btn btn-outline" commandfor="my-dialog-<%= folder.id %>"> <i data-lucide="more-horizontal"></i> </button>
+
+          <dialog id="my-dialog-<%= folder.id %>">
+            <div class="title"><%= folder.name %></div>
+            <div class="dialog">
+              <a class="btn btn-outline btn-info btn-small" href="/folder/files/<%=folder.id%>"> <i data-lucide="eye"></i> view files </a>
+              <a class="btn btn-outline btn-warning btn-small" href="/folder/update/<%=folder.id%>"> <i data-lucide="edit"></i> edit </a>
+              <form action="/folder/delete/<%=folder.id%>" method="post"> <button class="btn btn-error btn-small"> <i data-lucide="trash"></i> delete </button></form>
+              <button commandfor="my-dialog-<%= folder.id %>" command="close" class="btn btn-outline btn-small"><i data-lucide="x"></i> Close</button>
+            </div>
+
+          </dialog>
+        </div>
+      </div>
+      <% }); %>
+    </div>
+
+    <a href="/account">Go back</a>
+
+  </div>
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    lucide.createIcons();
+
+    const menuButton = document.getElementById("menu-button");
+    const sidebar = document.getElementById("sidebar");
+
+    menuButton.addEventListener("click", () => {
+      sidebar.classList.toggle("slide-in");
+    });
+  </script>
+</body>
+
+</html>

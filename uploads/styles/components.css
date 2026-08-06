@@ -7,6 +7,7 @@ button, .btn{
     display: flex;
     justify-content: center;
     transition: all 0.3s ease-in-out;
+    align-items: center;
 
 }
 
@@ -56,6 +57,33 @@ a{
 .btn-outline:hover{
     background-color: var(--primary-color);
     color: var(--card-background-color);
+}
+
+.btn-small{
+    padding: var(--xs);
+    font-size: calc(var(--sm) - 2px);
+}
+
+.btn-warning{
+    background-color: var(--warning-background-color);
+    color: var(--warning-text-color);
+    border: 1px solid var(--warning-text-color);
+}
+
+.btn-warning:hover{
+    background-color: var(--warning-text-color);
+    color: var(--warning-background-color);
+}
+
+.btn-info{
+    background-color: var(--info-background-color);
+    color: var(--info-text-color);
+    border: 1px solid var(--info-text-color);
+}
+
+.btn-info:hover{
+    background-color: var(--info-text-color);
+    color: var(--info-background-color);
 }
 
 .error{

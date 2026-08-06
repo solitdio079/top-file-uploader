@@ -87,7 +87,8 @@ router.get("/", async (req, res, next) => {
 
     try {
         const folders = await prisma.folder.findMany({
-            where: { ownerId }
+            where: { ownerId },
+            include: { files: true }
         })
         res.locals.folders = folders
         return res.render("folders", { folders })
