@@ -1,7 +1,6 @@
 @import url(../styles/base.css);
 @import url(../styles/components.css);
 
-
 header {
     box-shadow: 0px 1px 2px var(--border-color);
     display: flex;
@@ -90,7 +89,6 @@ header aside nav a {
     width: 100%;
     text-align: center;
     max-width: 400px;
-
 }
 
 .profile-card img {
@@ -134,7 +132,6 @@ header aside nav a {
     width: 100%;
     text-align: center;
     max-width: 200px;
-
 }
 
 .storage-card h3 {
@@ -164,7 +161,6 @@ header aside nav a {
     font-size: calc(var(--sm) - 2px);
 }
 
-
 .manage-card {
     display: flex;
     flex-direction: column;
@@ -178,7 +174,6 @@ header aside nav a {
     width: 100%;
     text-align: center;
     max-width: 400px;
-
 }
 
 .manage-card .manage-icon {
@@ -192,7 +187,6 @@ header aside nav a {
     color: var(--secondary-text-color);
     transition: all 0.3s ease-in-out;
     margin: var(--md) auto;
-
 }
 
 .manage-card .manage-icon svg {
@@ -253,16 +247,99 @@ header aside nav a {
 }
 
 .folder-form .input-container input {
-    flex: 2
+    flex: 2;
 }
 
 .folder-form .input-container button {
-    flex: 1
+    flex: 1;
+}
+
+/***  Folders file  ***/
+
+main .table-wrapper {
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    overflow: hidden;
+    /* important for rounded corners */
 }
 
 
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
 
-/***  Folders file  ***/
+th {
+    background: #f8fafc;
+    color: #475569;
+    text-align: left;
+    font-weight: 600;
+    padding: 12px 16px;
+}
+
+td {
+    padding: 12px 16px;
+    color: #334155;
+}
+
+tbody tr {
+    border-top: 1px solid #e5e7eb;
+}
+
+tbody tr:hover {
+    background: #f8fafc;
+}
+
+/***  Files file  ***/
+
+.main-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sm);
+}
+
+.main-header .folder-info {
+    display: flex;
+    gap: var(--sm);
+    min-width: 75%;
+    align-items: center;
+}
+
+.main-header .folder-info .icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: calc(var(--xl) * 2);
+    color: var(--folder-purple);
+}
+
+.main-header .folder-info .icon svg {
+    width: calc(var(--xl) * 2);
+    height: calc(var(--xl) * 2);
+}
+
+.main-header .folder-info .content {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    gap: var(--xs);
+}
+
+.main-header .folder-info .content .title {
+    margin: 0;
+    font-size: var(--md);
+    font-weight: bold;
+    color: var(--main-text-color);
+}
+
+.main-header .folder-info .content .description {
+    margin: 0;
+    font-size: var(--sm);
+    color: var(--secondary-text-color);
+}
 
 .folder-card-container {
     display: grid;
@@ -293,6 +370,7 @@ header aside nav a {
     color: var(--folder-blue);
     transition: all 0.3s ease-in-out;
 }
+
 .folder-card .icon svg {
     width: var(--lg);
     height: var(--lg);
@@ -314,18 +392,18 @@ header aside nav a {
 }
 
 .folder-card .content .description {
-    margin: 0;  
+    margin: 0;
     font-size: calc(var(--sm) - 2px);
     color: var(--secondary-text-color);
 }
 
-.folder-card dialog[open]{
+.folder-card dialog[open] {
     max-width: 300px;
     margin: 1rem auto;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;    
+    justify-content: center;
     gap: var(--sm);
     padding: var(--sm);
     background-color: var(--card-background-color);
@@ -336,7 +414,7 @@ header aside nav a {
     border: 1px solid var(--border-color);
 }
 
-.dialog{
+.dialog {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -346,7 +424,6 @@ header aside nav a {
 
 /**** Folder file done ****/
 @media (min-width: 1024px) {
-
     body {
         display: flex;
     }
@@ -363,12 +440,11 @@ header aside nav a {
         gap: var(--sm);
         align-items: start;
         padding: var(--sm) var(--page-padding);
-       /* background-color: aqua;*/
-
+        /* background-color: aqua;*/
     }
 
-    header .logo-container{
-        padding:0;
+    header .logo-container {
+        padding: 0;
         /*background-color:blue;*/
     }
 
@@ -380,7 +456,7 @@ header aside nav a {
         min-height: 90%;
         transform: translateX(0%);
         box-shadow: none;
-        border:none;
+        border: none;
         padding: var(--md);
     }
 
@@ -397,7 +473,7 @@ header aside nav a {
         padding: var(--page-padding);
     }
 
-    .profile-card{
+    .profile-card {
         flex-direction: row;
         justify-content: space-evenly;
         align-items: center;
@@ -406,27 +482,33 @@ header aside nav a {
         max-width: 600px;
     }
 
-    .storage-card.big{
+    .storage-card.big {
         padding: var(--md);
         min-width: 600px;
     }
 
-    .manage-card{
+    .manage-card {
         flex-direction: row;
         padding: var(--md);
         max-width: 600px;
         text-align: start;
     }
 
-    .manage-card .manage-content
-    {
+    .manage-card .manage-content {
         align-items: start;
     }
 
-    .folder-form{
+    .folder-form {
         padding: var(--md);
         max-width: 600px;
     }
-    
 
+    /* Folder files*/
+    .main-header {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: var(--md);
+    }
 }

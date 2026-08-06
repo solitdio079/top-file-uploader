@@ -36,45 +36,61 @@
 
   <div class="main">
 
-    <h1> Files inside <%= folder.name %>
-    </h1>
+    <div class="main-header">
+      <div class="folder-info">
+        <div class="icon"> <i data-lucide="folder"></i></div>
+        <div class="content">
+          <h1 class="title"> <%= folder.name %> </h1>
+          <p class="description"> <%= files.length %> files </p>
+        </div>
+      </div>
 
-    <table border="1">
-      <tr>
-        <th>Name</th>
-        <th>Size</th>
-        <th>Uploaded</th>
-        <th></th>
-      </tr>
+      <a class="btn btn-primary" href="/folder/upload/<%= folder.name %>"> <i data-lucide="upload"></i> Upload</a>
+    </div>
 
-      <% files.forEach(file=> { %>
-      <tr>
-        <td> <%= file.name %> </td>
-        <td> <%= file.sizeInKB %> KB </td>
-        <td> <%= file.createdAt %> </td>
 
-        <td> <a href="/download/<%=file.folderName%>/<%=file.storageName%>" download=""> <button>Download</button> </a> </td>
-      </tr>
+    <div class="table-wrapper">
+      <table class="files-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Size</th>
+            <th>Uploaded</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
 
-      <% }); %>
 
-    </table>
+          <% files.forEach(file=> { %>
+          <tr>
+            <td> <%= file.name %> </td>
+            <td> <%= file.sizeInKB %> KB </td>
+            <td> <%= file.createdAt.getDate() + "/" + file.createdAt.getMonth() + "/" + file.createdAt.getFullYear() %> </td>
 
-    <a href="/folder/">Go back</a>
+            <td> <a href="/download/<%=file.folderName%>/<%=file.storageName%>" download=""> <button class="btn btn-outline btn-small">Download</button> </a> </td>
+          </tr>
 
-  </div>
+          <% }); %>
+        </tbody>
 
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <script>
-    lucide.createIcons();
+      </table>
 
-    const menuButton = document.getElementById("menu-button");
-    const sidebar = document.getElementById("sidebar");
+      <a class="btn btn-outline btn-small btn-info" href="/folder/">Go back</a>
 
-    menuButton.addEventListener("click", () => {
-      sidebar.classList.toggle("slide-in");
-    });
-  </script>
+    </div>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+      lucide.createIcons();
+
+      const menuButton = document.getElementById("menu-button");
+      const sidebar = document.getElementById("sidebar");
+
+      menuButton.addEventListener("click", () => {
+        sidebar.classList.toggle("slide-in");
+      });
+    </script>
 </body>
 
 </html>
